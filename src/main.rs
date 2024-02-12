@@ -39,7 +39,8 @@ fn run<R: BufRead>(reader: R, verbose: bool) {
 
     for line in reader.lines() {
             let line = line.unwrap();
-            println!("{}", line);
+            let answer = calc.eval(&line);
+            println!("{}", answer);
     }
 }
 
@@ -75,6 +76,15 @@ impl RpnCalculator {
                 };
                 stack.push(res);
             }
+
+            if self.0 {
+                println!("{:?}{:?}", tokens, stack);
+            }
+        }
+        if stack.len() == 1 {
+            stack[0]
+        } else {
+            panic!("invalid syntax");
         }
     }
 }
